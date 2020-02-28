@@ -4,7 +4,7 @@ using System;
 namespace C2
 {
 
-  public class Class
+  public class DownloadManager
   {
     readonly Downloader downloader = new Downloader("../downloads/");
 

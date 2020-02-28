@@ -8,7 +8,7 @@ namespace C2
     static async Task Main(string[] args)
     {
       Console.WriteLine("Hello World!");
-      var downloadManager = new Class();
+      var downloadManager = new DownloadManager();
       downloadManager.AddUrlToDownload("https://pokeapi.co/api/v2/pokemon/ditto/");
       await downloadManager.Download();
     }

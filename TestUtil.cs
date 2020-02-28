@@ -1,9 +1,24 @@
 ﻿using System.Collections.Generic;
-
+using C2;
 using NUnit.Framework;
+using System;
 
 namespace C2Tests
 {
+
+  [TestFixture]
+  public class DownloadManager_Downloads
+  {
+    [Test]
+    public void DownloadManager_Runs()
+    {
+      Console.WriteLine("Running tests");
+      var downloadManager = new DownloadManager();
+
+      Assert.IsFalse(false);
+
+    }
+  }
 
   public static class TestUtil
   {
