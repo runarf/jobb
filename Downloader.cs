@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
-
-using BestHTTP;
+using System.Net.Http;
+using System.Threading.Tasks;
+//using BestHTTP;
 
 namespace C2
 {
@@ -9,9 +10,11 @@ namespace C2
   /// <summary>
   /// A class for downloading files from the Internet, saving them in a local directory.
   /// </summary>
-  public class Downloader : IDownloader
+  public class Downloader
   {
     readonly string directory;
+
+    static readonly HttpClient httpClient = new HttpClient();
 
     /// <param name="directory">The path to the local directory where downloaded files are to be saved.</param>
     public Downloader(string directory)
@@ -25,21 +28,13 @@ namespace C2
     /// </summary>
     /// <param name="url">The URL to download from.</param>
     /// <returns>A Promise. The Promise is Complete()-ed when downloading finishes.</returns>
-    public Promise Download(string url)
+    public async Task<string> Download(string url)
     {
-      var res = new Promise();
+      var response = await httpClient.GetAsync(url);
+      response.EnsureSuccessStatusCode();
+      var responseBody = await response.Content.ReadAsStringAsync();
 
-      new HTTPRequest(
-          new Uri(url),
-          (_, response) =>
-          {  // This code is run once the HTTP transaction is complete:
-                  if (response.IsSuccess)
-              WriteFile(ComputeLocalFilePathFor(url), response.Data);
-            res.Complete();
-          }
-      ).Send();  // Sends HTTP request in a background thread
-
-      return res;
+      return responseBody;
     }
 
     string ComputeLocalFilePathFor(string url) => Path.Combine(directory, Path.GetFileName(url));

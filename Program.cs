@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Threading.Tasks;
 
-namespace EIDU_C2
+namespace C2
 {
-    class Program
+  class Program
+  {
+    static async Task Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+      Console.WriteLine("Hello World!");
+      var downloadManager = new Class();
+      downloadManager.AddUrlToDownload("https://pokeapi.co/api/v2/pokemon/ditto/");
+      await downloadManager.Download();
     }
+  }
 }
