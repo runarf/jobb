@@ -10,7 +10,7 @@ namespace C2
   /// <summary>
   /// A class for downloading files from the Internet, saving them in a local directory.
   /// </summary>
-  public class Downloader
+  public class Downloader : IDownloader
   {
     readonly string directory;
 
@@ -37,7 +37,7 @@ namespace C2
       var responseByte = await response.Content.ReadAsByteArrayAsync();
       var folder = ComputeLocalFilePathFor(url);
       Console.WriteLine("Write to folder {0}", folder);
-      WriteFile(folder, responseByte);
+      await WriteFile(folder, responseByte);
 
       return responseBody;
     }
@@ -50,10 +50,10 @@ namespace C2
       return path;
     }
 
-    static void WriteFile(string filePath, byte[] data)
+    static async Task WriteFile(string filePath, byte[] data)
     {
-      using (var stream = File.OpenWrite(filePath))
-        stream.Write(data, 0, data.Length);
+      using (FileStream stream = File.OpenWrite(filePath))
+        await stream.WriteAsync(data, 0, data.Length);
     }
   }
 
