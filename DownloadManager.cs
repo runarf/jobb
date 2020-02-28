@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using System.IO;
 namespace C2
 {
 
@@ -14,10 +15,12 @@ namespace C2
 
     public async Task Download()
     {
+      //Environment.GetFolderPath()
       if (urlsToDownload.Count > 0)
       {
         var currentUrl = urlsToDownload.Peek();
         var responseBody = await downloader.Download(currentUrl);
+
         Console.WriteLine(responseBody);
         urlsToDownload.Dequeue();
         await Download();

@@ -33,6 +33,10 @@ namespace C2
       var response = await httpClient.GetAsync(url);
       response.EnsureSuccessStatusCode();
       var responseBody = await response.Content.ReadAsStringAsync();
+      var responseByte = await response.Content.ReadAsByteArrayAsync();
+      var folder = ComputeLocalFilePathFor(url);
+      WriteFile(folder, responseByte);
+      Console.WriteLine("Wrote to folder {0}", folder);
 
       return responseBody;
     }
