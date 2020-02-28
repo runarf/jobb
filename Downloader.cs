@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-using BestHTTP;
+// using BestHTTP;
 
 namespace C2
 {
@@ -29,15 +29,23 @@ namespace C2
     {
       var res = new Promise();
 
-      new HTTPRequest(
-          new Uri(url),
-          (_, response) =>
-          {  // This code is run once the HTTP transaction is complete:
-                  if (response.IsSuccess)
-              WriteFile(ComputeLocalFilePathFor(url), response.Data);
-            res.Complete();
-          }
-      ).Send();  // Sends HTTP request in a background thread
+      Action<object, dynamic> callback = (_, response) =>
+      {
+        Console.WriteLine("jeia");
+        if (response.IsSuccess)
+          Console.WriteLine("success");
+        //WriteFile(ComputeLocalFilePathFor(url), response.Data);
+        res.Complete();
+      };
+
+      var placeholder = new { IsSuccess = true, Data = "hei" };
+
+      callback(1, placeholder);
+
+      // new HTTPRequest(
+      //     new Uri(url),
+      //     callback
+      // ).Send();  // Sends HTTP request in a background thread
 
       return res;
     }
