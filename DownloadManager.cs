@@ -7,7 +7,7 @@ namespace C2
 
   public class DownloadManager
   {
-    readonly Downloader downloader = new Downloader("../downloads/");
+    readonly Downloader downloader = new Downloader("./downloads/");
 
     readonly Queue<string> urlsToDownload = new Queue<string>();
 
@@ -21,7 +21,7 @@ namespace C2
         var currentUrl = urlsToDownload.Peek();
         var responseBody = await downloader.Download(currentUrl);
 
-        Console.WriteLine(responseBody);
+        //Console.WriteLine(responseBody);
         urlsToDownload.Dequeue();
         await Download();
       }

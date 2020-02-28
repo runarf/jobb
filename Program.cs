@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using C2;
 
-namespace C2
+namespace EIDU_C2
 {
   class Program
   {

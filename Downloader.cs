@@ -30,18 +30,25 @@ namespace C2
     /// <returns>A Promise. The Promise is Complete()-ed when downloading finishes.</returns>
     public async Task<string> Download(string url)
     {
+      Console.WriteLine("Getting url {0}", url);
       var response = await httpClient.GetAsync(url);
       response.EnsureSuccessStatusCode();
       var responseBody = await response.Content.ReadAsStringAsync();
       var responseByte = await response.Content.ReadAsByteArrayAsync();
       var folder = ComputeLocalFilePathFor(url);
+      Console.WriteLine("Write to folder {0}", folder);
       WriteFile(folder, responseByte);
-      Console.WriteLine("Wrote to folder {0}", folder);
 
       return responseBody;
     }
 
-    string ComputeLocalFilePathFor(string url) => Path.Combine(directory, Path.GetFileName(url));
+    string ComputeLocalFilePathFor(string url)
+    {
+      var fileName = Path.GetFileName(url);
+      Console.WriteLine("Filename is {0}", fileName);
+      var path = Path.Combine(directory, "runar.json");// 
+      return path;
+    }
 
     static void WriteFile(string filePath, byte[] data)
     {
